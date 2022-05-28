@@ -1,4 +1,7 @@
-<?php  require "getApi.php"; ?>
+<?php 
+     require "getApi.php"; 
+     require "connectdb.php";
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -10,21 +13,30 @@
 </head>
 <body>
 
+    <h3><?= $error ?></h3>
+
     <form action="" method="POST">
         <input type="text" name="country" required>
         <input type="submit" name="submit">
     </form>
 
 
-    <img src="<?= $image ?>" alt="image">
-    <h1> native name: <?= $name ?></h1>
-    <h3>capital:  <?= $capital ?></h3>
-    <h3>population:  <?=  $population  ?></h3>
-    <h3>region:  <?= $region   ?></h3>
-    <h3>sub region:  <?= $sub_region  ?></h3>
-    <h3>currencies:  <?= $currencies  ?></h3>
-    <h3>languages:  <?= $languages ?></h3>
-    
+    <?php foreach ($countries as $country): ?>
+
+        <img src="<?=  $country['image'] ?>" alt="image">
+        <h1> native name: <?= $country['name'] ?></h1>
+        <h3>capital:  <?= $country['capital']?></h3>
+        <h3>population:  <?= number_format((float)$country['population'], 0, ' ', ' ') ?></h3>
+        <h3>region:  <?= $country['region']  ?></h3> 
+        <h3>sub region:  <?= $country['sub_region'] ?></h3>
+        <h3>currencies:  <?= $country['currencies'] ?></h3>
+        <h3>languages:  <?= $country['languages'] ?></h3>
+
+    <?php endforeach ?>
+
+    <pre>
+        <?php print_r($countries) ?>
+    </pre>
 
 </body>
 </html>
