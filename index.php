@@ -1,6 +1,5 @@
 <?php 
      require "getApi.php"; 
-     require "connectdb.php";
 ?>
 
 <!DOCTYPE html>
@@ -13,15 +12,23 @@
 </head>
 <body>
 
-    <h3><?= $error ?></h3>
+    <nav>
+        <ul>
+            <li><a href="index.php">serech</a></li> <br>
+            <li><a href="reserches.php">see all reserches</a></li>
+        </ul>
+    </nav>
+
+    <?php if($error !== ""):?> 
+        <h3><?= $error ?></h3>
+    <?php endif?>
 
     <form action="" method="POST">
         <input type="text" name="country" required>
         <input type="submit" name="submit">
     </form>
 
-
-    <?php foreach ($countries as $country): ?>
+    <?php if($country):?>
 
         <img src="<?=  $country['image'] ?>" alt="image">
         <h1> native name: <?= $country['name'] ?></h1>
@@ -32,11 +39,7 @@
         <h3>currencies:  <?= $country['currencies'] ?></h3>
         <h3>languages:  <?= $country['languages'] ?></h3>
 
-    <?php endforeach ?>
-
-    <pre>
-        <?php print_r($countries) ?>
-    </pre>
+    <?php endif ;?>
 
 </body>
 </html>
