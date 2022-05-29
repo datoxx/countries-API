@@ -1,22 +1,18 @@
 <?php 
 
+    //connect datebase
+    require "datebase.php";
+
     if(isset($_POST['submit'])) {    
 
         $name = $_POST['country'];
 
-        //connect db
-        $pdo = new PDO('mysql:host=localhost;port=9000;dbname=countries', 'dato', '072fE290@');
-        //throw error
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        //fetch country from datebase
+        $country = seach_in_db($name);
 
-        //fetch country from db
-        $statement = $pdo->prepare('SELECT * FROM country WHERE name = :name');
-        $statement->bindValue(':name', $name);
-        $statement->execute();
-        $country = $statement->fetch(PDO::FETCH_ASSOC);
-
+        //if country not found fetch from api and save datebase
         if(!$country) {
-             //fech date
+            //fech date from api
             $url = "https://restcountries.com/v3.1/name/$name?fullText=true";
             $json = file_get_contents($url);
 
@@ -26,7 +22,7 @@
             } else {
                 $date = json_decode($json, true);
 
-                // disply date
+                //nessesery country property
                 $name = $date[0]['name']['common'];
                 $capital = $date[0]['capital'][0];
                 $population = $date[0]['population'];
@@ -47,9 +43,7 @@
                 $save_image_location = $images_dir . $image_name;
                 file_put_contents($save_image_location, file_get_contents($image));
 
-
-
-                //save date in db
+                //save date in datebase
                 $statement = $pdo->prepare(
                     "INSERT INTO country  (name, capital, population, region, currencies, languages, image, sub_region, create_date)
                     VALUES (:name, :capital, :population, :region, :currencies, :languages, :image, :sub_region, :date)
@@ -65,14 +59,10 @@
                 $statement->bindValue(':image', $save_image_location);
                 $statement->bindValue(':sub_region', $sub_region );
                 $statement->bindValue(':date', date('Y-m-d H:i:s'));
-            
                 $statement->execute();
 
                 //fetch country from db
-                $statement = $pdo->prepare('SELECT * FROM country WHERE name = :name');
-                $statement->bindValue(':name', $name);
-                $statement->execute();
-                $country = $statement->fetch(PDO::FETCH_ASSOC);
+                $country = seach_in_db($name);
             }
         }       
     }
