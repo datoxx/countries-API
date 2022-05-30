@@ -4,15 +4,16 @@
      require_once "../datebase.php" ; 
 ?>
 
-<?php 
-    // header partials
-    require_once "../partials/header.php" ;   
-?>
+    <?php 
+        // header partials
+        require_once "../partials/header.php" ;   
+    ?>
 
-<?php 
-    // render country card
-    require_once "../partials/countryCard.php" ;
-?>
 
+    <div class="mt-8">
+        <?php require_once "../partials/countryCard.php" ;  // render country card ?>
+    </div>
+
+    </main>
 </body>
 </html>

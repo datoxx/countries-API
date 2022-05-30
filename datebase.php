@@ -6,6 +6,31 @@
     //throw error
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+
+    // save date in datebase
+    if(isset($_POST['submit'])) {
+        function save_date($name, $capital, $population,  $region, $sub_region, $currencies, $languages, $save_image_location){
+            global $pdo;
+            //save date in datebase
+             $statement = $pdo->prepare(
+                "INSERT INTO country  (name, capital, population, region, currencies, languages, image, sub_region, create_date)
+                VALUES (:name, :capital, :population, :region, :currencies, :languages, :image, :sub_region, :date)
+                "
+            );
+        
+            $statement->bindValue(':name', $name);
+            $statement->bindValue(':capital', $capital);  
+            $statement->bindValue(':population', $population);
+            $statement->bindValue(':region', $region);
+            $statement->bindValue(':currencies', $currencies);
+            $statement->bindValue(':languages', $languages);
+            $statement->bindValue(':image', $save_image_location);
+            $statement->bindValue(':sub_region', $sub_region );
+            $statement->bindValue(':date', date('Y-m-d H:i:s'));
+            $statement->execute();
+        };
+    }
+
     // searhes county in datebase and return 
     if(isset($_POST['submit'])) {
         function seach_in_db($name){
