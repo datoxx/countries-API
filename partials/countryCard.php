@@ -16,7 +16,7 @@
 <?php endif ?>
 
 <?php if($_SERVER['PHP_SELF'] == '/reserches.php') : ?>
-    <div class="bg-white rounded overflow-hidden shadow-md mt-8">
+    <div class="bg-white rounded overflow-hidden shadow-md mt-8 hover:shadow-lg hover:scale-105 transition ease-out  delay-150 duration-500">
         <img class="w-full h-32 sm:h-48 object-cover" src="<?=  $country['image'] ?>" alt="image">
         <div class="m-4">
             <span class="font-bold block text-gray-500 text-xl mb-2"> <?= $country['name'] ?></span>
